@@ -1,3 +1,3 @@
 <template>
-  <div>1234</div>
+  <RouterView />
 </template>

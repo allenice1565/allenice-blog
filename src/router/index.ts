@@ -3,7 +3,16 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
   // 动态字段以冒号开始
-  { path: '/', component: DefaultLayout },
+  {
+    path: '/',
+    component: DefaultLayout,
+    children: [
+      {
+        path: '/editor',
+        component: () => import('@/pages/editor/index.vue'),
+      },
+    ],
+  },
 ];
 
 const router = createRouter({

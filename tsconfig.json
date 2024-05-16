@@ -27,6 +27,7 @@
   "include": [
     "./vite.config.ts",
     "./tailwind.config.js",
+    "src/custom-types.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue"
