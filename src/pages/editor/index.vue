@@ -5,13 +5,13 @@
         style="border-bottom: 1px solid #ccc"
         :editor="editorRef"
         :default-config="toolbarConfig"
-        :mode="mode"
+        mode="default"
       />
       <Editor
         v-model="valueHtml"
         style="height: 500px; overflow-y: hidden"
         :default-config="editorConfig"
-        :mode="mode"
+        mode="default"
         @on-created="handleCreated"
       />
     </div>
@@ -19,9 +19,9 @@
 </template>
 <script setup lang="ts">
 import { useTitle } from '@vueuse/core'
+import { DomEditor, IToolbarConfig } from '@wangeditor/editor'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
-import { IToolbarConfig } from '@wangeditor/editor'
 
 useTitle('写文章', { titleTemplate: '%s | Allenice' })
 // 编辑器实例，必须用 shallowRef
@@ -51,5 +51,11 @@ onBeforeUnmount(() => {
 
 const handleCreated = (editor) => {
   editorRef.value = editor // 记录 editor 实例，重要！
+  nextTick(() => {
+    const toolbar = DomEditor.getToolbar(editor)
+    const curToolbarConfig = toolbar.getConfig()
+    console.log('当前菜单排序和分组', curToolbarConfig.toolbarKeys)
+    console.log('所有的菜单key', editor.getAllMenuKeys())
+  })
 }
 </script>
