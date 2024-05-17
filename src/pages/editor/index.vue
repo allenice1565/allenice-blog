@@ -21,6 +21,7 @@
 import { useTitle } from '@vueuse/core'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
+import { IToolbarConfig } from '@wangeditor/editor'
 
 useTitle('写文章', { titleTemplate: '%s | Allenice' })
 // 编辑器实例，必须用 shallowRef
@@ -36,7 +37,9 @@ onMounted(() => {
   }, 1500)
 })
 
-const toolbarConfig = {}
+const toolbarConfig: Partial<typeof IToolbarConfig> = {
+  excludeKeys: ['group-image', 'color'],
+}
 const editorConfig = { placeholder: '请输入内容...' }
 
 // 组件销毁时，也及时销毁编辑器
