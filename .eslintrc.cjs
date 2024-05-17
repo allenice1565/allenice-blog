@@ -1,4 +1,6 @@
 module.exports = {
   extends: ['plugin:vue/vue3-recommended', '.eslintrc-auto-import.json', 'prettier'],
-  rules: {},
+  rules: {
+    'vue/multi-word-component-names': 'off',
+  },
 }
