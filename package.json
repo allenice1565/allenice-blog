@@ -28,6 +28,8 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
+    "@wangeditor/plugin-formula": "^1.0.11",
+    "katex": "^0.16.10",
     "vue": "^3.4.27",
     "vue-router": "4"
   },

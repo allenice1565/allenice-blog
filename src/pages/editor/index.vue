@@ -19,11 +19,14 @@
 </template>
 <script setup lang="ts">
 import { useTitle } from '@vueuse/core'
-import { DomEditor, IToolbarConfig } from '@wangeditor/editor'
+import { Boot, DomEditor, IToolbarConfig } from '@wangeditor/editor'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
+import formulaModule from '@wangeditor/plugin-formula'
 
 useTitle('写文章', { titleTemplate: '%s | Allenice' })
+Boot.registerModule(formulaModule)
+
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef()
 
@@ -38,9 +41,40 @@ onMounted(() => {
 })
 
 const toolbarConfig: Partial<typeof IToolbarConfig> = {
-  excludeKeys: ['group-image', 'color'],
+  toolbarKeys: [
+    'headerSelect',
+    'bold',
+    'italic',
+    'blockquote',
+    'insertLink',
+    'insertImage',
+    'code',
+    'codeBlock',
+    'bulletedList',
+    'numberedList',
+    'through',
+    'todo',
+    'insertTable',
+    {
+      key: 'group-justify',
+      title: '对齐',
+      iconSvg:
+        '<svg viewBox="0 0 1024 1024"><path d="M768 793.6v102.4H51.2v-102.4h716.8z m204.8-230.4v102.4H51.2v-102.4h921.6z m-204.8-230.4v102.4H51.2v-102.4h716.8zM972.8 102.4v102.4H51.2V102.4h921.6z"></path></svg>',
+      menuKeys: ['justifyLeft', 'justifyRight', 'justifyCenter', 'justifyJustify'],
+    },
+    'insertFormula',
+    'divider',
+    'emotion',
+  ],
 }
-const editorConfig = { placeholder: '请输入内容...' }
+const editorConfig = {
+  placeholder: '请输入内容...',
+  hoverbarKeys: {
+    formula: {
+      menuKeys: ['editFormula'], // “编辑公式”菜单
+    },
+  },
+}
 
 // 组件销毁时，也及时销毁编辑器
 onBeforeUnmount(() => {
