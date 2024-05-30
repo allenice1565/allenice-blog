@@ -6,11 +6,15 @@ const routes = [
   {
     path: '/',
     component: DefaultLayout,
-    redirect: '/editor',
+    redirect: '/editor-byte',
     children: [
       {
         path: '/editor',
         component: () => import('@/pages/editor/index.vue'),
+      },
+      {
+        path: '/editor-byte',
+        component: () => import('@/pages/editor-byte/index.vue'),
       },
     ],
   },

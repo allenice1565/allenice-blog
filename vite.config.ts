@@ -2,6 +2,9 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite'
+import tailwindcss from 'tailwindcss'
+import autoprefixer from 'autoprefixer'
+import postcssImport from 'postcss-import'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,6 +27,9 @@ export default defineConfig({
     },
   },
   css: {
+    postcss: {
+      plugins: [postcssImport({}), tailwindcss({}), autoprefixer({})],
+    },
     preprocessorOptions: {
       // key + config key代表预处理器的名
       less: {

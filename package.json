@@ -20,36 +20,56 @@
     "build": "vue-tsc && vite build",
     "dev": "vite",
     "prepare": "husky install",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
   },
   "lint-staged": {
     "*.{cjs,cts,js,jsx,mjs,mts,ts,tsx,vue}": "eslint --fix",
     "*.{cjs,css,cts,html,js,json,jsx,less,md,mjs,mts,scss,ts,tsx,vue,yaml,yml}": "prettier --write"
   },
   "dependencies": {
+    "@bytemd/plugin-breaks": "^1.21.0",
+    "@bytemd/plugin-frontmatter": "^1.21.0",
+    "@bytemd/plugin-gemoji": "^1.21.0",
+    "@bytemd/plugin-gfm": "^1.21.0",
+    "@bytemd/plugin-highlight": "^1.21.0",
+    "@bytemd/plugin-math": "^1.21.0",
+    "@bytemd/plugin-medium-zoom": "^1.21.0",
+    "@bytemd/vue-next": "^1.21.0",
     "@vueuse/core": "^10.9.0",
     "@wangeditor/plugin-formula": "^1.0.11",
+    "bytemd": "^1.21.0",
     "katex": "^0.16.10",
     "vue": "^3.4.27",
-    "vue-router": "4"
+    "vue-router": "4",
+    "vuetify": "^3.6.6"
   },
   "devDependencies": {
+    "@mdi/js": "^7.4.47",
+    "@types/autoprefixer": "^10.2.0",
     "@types/node": "^20.12.12",
+    "@types/postcss-import": "^14.0.3",
     "@typescript-eslint/parser": "^7.9.0",
     "@vitejs/plugin-vue": "^5.0.4",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
+    "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-vue": "^9.26.0",
     "husky": "^8.0.3",
+    "less": "^4.2.0",
     "lint-staged": "^15.2.2",
+    "postcss-import": "^16.1.0",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5",
     "unplugin-auto-import": "^0.17.6",
     "vite": "^5.2.11",
+    "vitepress": "^1.2.2",
     "vue-eslint-parser": "^9.4.2",
     "vue-tsc": "^2.0.17"
   }
