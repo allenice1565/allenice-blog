@@ -16,6 +16,14 @@ const routes = [
         path: '/editor-byte',
         component: () => import('@/pages/editor-byte/index.vue'),
       },
+      {
+        path: '/regist',
+        component: () => import('@/pages/regist/index.vue'),
+      },
+      {
+        path: '/article/:id',
+        component: () => import('@/pages/article/index.vue'),
+      },
     ],
   },
 ]

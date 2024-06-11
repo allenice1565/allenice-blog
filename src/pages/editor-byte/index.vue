@@ -2,13 +2,13 @@
   <div class="bytemd-container">
     <div class="header">
       <v-text-field
-        v-model:model-value="title"
+        v-model="title"
         bg-color="#fff"
         base-color="#fff"
         placeholder="输入文章标题..."
         variant="plain"
       />
-      <v-btn base-color="#1d7dfa">发布</v-btn>
+      <v-btn base-color="#1d7dfa" @click="handleSubmit">发布</v-btn>
     </div>
     <Editor
       class="bytemd-editor"
@@ -54,6 +54,18 @@ const title = ref('')
 const value = ref('')
 const handleChange = (v: string) => {
   value.value = v
+}
+const handleSubmit = () => {
+  fetch('/api/articles', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      title: title.value,
+      content: value.value,
+    }),
+  })
 }
 </script>
 <style scoped lang="less">
