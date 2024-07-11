@@ -28,7 +28,7 @@ export default defineConfig({
   },
   css: {
     postcss: {
-      plugins: [postcssImport({}), tailwindcss({}), autoprefixer({})],
+      plugins: [postcssImport({}), tailwindcss(), autoprefixer({})],
     },
     preprocessorOptions: {
       // key + config key代表预处理器的名

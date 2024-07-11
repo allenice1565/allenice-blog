@@ -1,6 +1,6 @@
 <template>
-  <div class="article-container bg-[#f2f3f5]">
-    <div class="flex justify-center">
+  <div class="article-container">
+    <div class="flex justify-center h-full">
       <v-card class="!p-[20px]" width="820px">
         <h1 class="text-[24px] text-center">{{ title }}</h1>
         <Viewer :value="content" :plugins="plugins" />
