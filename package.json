@@ -1,25 +1,28 @@
 {
-  "name": "allenice-blog",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "vitepress dev docs",
-    "build": "vitepress build docs",
-    "prepare": "husky"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.4.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-config-standard-with-typescript": "^43.0.1",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-markdown": "^5.1.0",
-    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
-    "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-vue": "^9.27.0",
-    "husky": "^9.1.3",
-    "lint-staged": "^15.2.7",
-    "prettier": "^3.3.3",
-    "typescript": "*",
-    "vitepress": "^1.3.1"
-  }
+    "name": "allenice-blog",
+    "version": "0.0.1",
+    "scripts": {
+        "dev": "vitepress dev docs",
+        "build": "vitepress build docs",
+        "prepare": "husky"
+    },
+    "lint-staged": {
+        "docs/**/*.{js,vue,md}": "prettier --write"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^6.4.0",
+        "eslint": "^8.57.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-config-standard-with-typescript": "^43.0.1",
+        "eslint-plugin-import": "^2.25.2",
+        "eslint-plugin-markdown": "^5.1.0",
+        "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+        "eslint-plugin-promise": "^6.0.0",
+        "eslint-plugin-vue": "^9.27.0",
+        "husky": "^9.1.3",
+        "lint-staged": "^15.2.7",
+        "prettier": "^3.3.3",
+        "typescript": "*",
+        "vitepress": "^1.3.1"
+    }
 }

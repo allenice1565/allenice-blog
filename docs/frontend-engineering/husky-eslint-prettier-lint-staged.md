@@ -373,7 +373,7 @@ pnpm add -D lint-staged
 
 默认情况下，lint-staged会同时执行匹配到的文件
 
-多条命令的时候，不要写重叠的匹配，而是将对象值写成数组形式
+如果要对同一组文件运行多个命令，可以使用数组语法来确保命令按顺序运行
 
 ```
 {
@@ -382,5 +382,34 @@ pnpm add -D lint-staged
 }
 ```
 
-> [!WARNING]
-> 一定要注意匹配重叠的文件，如果配置命令都要改动文件，会造成竞争
+当配置的 glob 重叠且任务对文件进行编辑时，请特别注意。例如，在此配置中prettier，可能会尝试同时eslint对同一文件进行更改，从而导致竞争条件
+
+```
+{
+  "*": "prettier --write",
+  "*.ts": "eslint --fix"
+}
+```
+
+可以使用否定模式和数组语法来解决它：
+
+```
+{
+  "!(*.ts)": "prettier --write",
+  "*.ts": ["eslint --fix", "prettier --write"]
+}
+```
+
+另一个示例是，任务对文件进行编辑并且 glob 匹配多个文件但不重叠：
+
+```
+{
+  "*.css": ["stylelint --fix", "prettier --write"],
+  "*.{js,jsx}": ["eslint --fix", "prettier --write"],
+  "!(*.css|*.js|*.jsx)": ["prettier --write"]
+}
+```
+
+如果有必要，您可以使用限制并发性`--concurrent <number>`或者用完全禁用它`--concurrent false`
+
+## commitlint
