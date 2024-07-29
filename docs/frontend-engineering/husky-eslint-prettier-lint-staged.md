@@ -200,23 +200,43 @@ module.exports = {
 
 #### 解决方案选择
 
-【在eslint中关闭冲突规则】和【将prettier的规则加入到eslint规则中】两种方案
+【在eslint中关闭冲突规则】和【将prettier的规则加入到eslint规则中】两种方案都可以，prettier官网推荐前者，前者速度快些。
 
 ### 疑问：为什么eslint可以执行代码格式化，还需要prettier？
 
-eslint只是指定格式化规则，比如[max-len](https://eslint.org/docs/rules/max-len)规则，只要满足eslint规则，eslint就不会进行格式化，而满足这条规则的写法有很多，容易造成风格不统一，比如：
+eslint格式化特点就是配置了哪些规则，就只会按照相应的规则格式化，，而prettier对于代码风格这方面做的非常细致，团队内部所有人使用prettier格式化后的结果可以做到风格一致。这一点eslint做不到，比如下面代码：
+
+```
+import { ref, computed, nextTick, watch, toRef, inject, onMounted, onBeforeUnmount } from 'vue'
+```
+
+这样写能通过eslint校验
 
 ```
 import {
-    Ref,
-computed,
-nextTick,
-    watch,
-toRef,
-    inject,
-onMounted,
-    onBeforeUnmount
+  ref, computed, nextTick, watch,
+  toRef,
+  inject, onMounted, onBeforeUnmount
 } from 'vue'
 ```
 
-### eslint-config-prettier
+这样写也能通过eslint校验
+
+使用prettier格式化后，只会有一个结果：
+
+```
+import {
+    ref,
+    computed,
+    nextTick,
+    watch,
+    toRef,
+    inject,
+    onMounted,
+    onBeforeUnmount,
+} from 'vue'
+```
+
+> [!TIP]
+> 只靠eslint很难做到统一团队内的代码风格，我们很难熟悉每一个格式化的规则并添加到eslint规则中。
+> 因此，我们需要eslint和prettier相互配合，prettier来完成统一代码风格的任务，eslint校验代码质量。
