@@ -240,3 +240,147 @@ import {
 > [!TIP]
 > 只靠eslint很难做到统一团队内的代码风格，我们很难熟悉每一个格式化的规则并添加到eslint规则中。
 > 因此，我们需要eslint和prettier相互配合，prettier来完成统一代码风格的任务，eslint校验代码质量。
+
+## husky
+
+[官方文档](https://typicode.github.io/husky/zh/)
+
+上面的eslint和prettier只是完成了团队中每一个人的代码规范，但是不能约束大家提交到git远程服务器的代码都是符合这个规范的，因此我们要对git提交过程进行校验以及格式化
+
+husky是一个[git钩子](https://git-scm.com/docs/githooks)工具，可以在git操作的时候执行一段脚本。我们可以依赖[git钩子](https://git-scm.com/docs/githooks)进行代码质量和风格校验，提交信息的格式校验。
+
+### 安装
+
+::: code-group
+
+```bash [npm]
+npm install --save-dev husky
+```
+
+```bash [pnpm]
+pnpm add --save-dev husky
+```
+
+```bash [yarn]
+yarn add --dev husky
+# Add pinst ONLY if your package is not private
+yarn add --dev pinst
+```
+
+```bash [bun]
+bun add --dev husky
+```
+
+:::
+
+### 初始化
+
+推荐使用`husky init`命令初始化，这个命令在`.husky/`可以创建`pre-commit`脚本并且在`package.json`中更新`prepare`脚本命令
+
+::: code-group
+
+```bash [npm]
+npx husky init
+```
+
+```bash [pnpm]
+pnpm exec husky init
+```
+
+```bash [yarn]
+# Due to specific caveats and differences with other package managers,
+# refer to the How To section.
+```
+
+```bash [bun]
+bunx husky init
+```
+
+:::
+
+初始化后，husky自动创建了`pre-commit`脚本，这个脚本在提交代码的时候执行，可以看到在`.husky/pre-commit`文件中，husky写入了`npm`脚本命令，在提交代码的时候，这个脚本命令会执行。
+
+后面可以配合lint-staged和commitlint工具分别校验暂存区代码以及提交信息。
+
+## lint-staged
+
+[lint-staged](https://github.com/lint-staged/lint-staged)可以拿到git暂存区的代码，然后执行代码质量和风格检查。
+
+### 安装
+
+::: code-group
+
+```bash [npm]
+npm install --save-dev lint-staged # requires further setup
+```
+
+```bash [pnpm]
+pnpm add -D lint-staged
+```
+
+:::
+
+### 准备工作
+
+1. 安装lint-staged
+2. 安装husky并设置pre-commit钩子
+3. 安装eslint和prettier
+4. 配置lint-staged以执行eslint和prettier
+
+> [!WARNING]
+> lint-staged`v15.0.0`版本开始不支持nodejs 16，nodejs版本最低需要`18.12.0`
+
+### 配置
+
+#### 配置方式
+
+1. 在package.json中配置`lint-staged`对象
+2. `.lintstagedrc`文件，可以通过扩展名决定是JSON还是YML语法：
+    - `.lintstagedrc.json`
+    - `.lintstagedrc.yaml`
+    - `.lintstagedrc.yml`
+3. `.lintstagedrc.js` 或者 `lint-staged.config.js`文件
+
+#### 配置规则
+
+配置是一个对象，对象的属性名是一个`glob`匹配模式（参考[micromatch](https://github.com/micromatch/micromatch)），对象的值是要运行的命令代码。js配置文件也可以导出一个函数，参考[Using JS configuration files](https://github.com/lint-staged/lint-staged?tab=readme-ov-file#using-js-configuration-files)。
+
+如果同一个匹配规则下需要执行多条命令，对象的值可以是一个数组。
+
+#### 案例
+
+`package.json`
+
+```
+{
+  "lint-staged": {
+    "*": "your-cmd"
+  }
+}
+```
+
+`.lintstagedrc`
+
+```
+{
+  "*": "your-cmd"
+}
+```
+
+这个配置里面的`your-cmd`会在被执行的时候传入当前暂存区的文件作为参数。就像这样：`your-cmd file1.ext file2.ext`
+
+#### 并发执行
+
+默认情况下，lint-staged会同时执行匹配到的文件
+
+多条命令的时候，不要写重叠的匹配，而是将对象值写成数组形式
+
+```
+{
+  "*.ts": ["prettier --list-different", "eslint"],
+  "*.md": "prettier --list-different"
+}
+```
+
+> [!WARNING]
+> 一定要注意匹配重叠的文件，如果配置命令都要改动文件，会造成竞争
