@@ -413,3 +413,126 @@ pnpm add -D lint-staged
 如果有必要，您可以使用限制并发性`--concurrent <number>`或者用完全禁用它`--concurrent false`
 
 ## commitlint
+
+### 安装
+
+::: code-group
+
+```bash [npm]
+npm install --save-dev @commitlint/config-conventional @commitlint/cli
+```
+
+```bash [yarn]
+yarn add --dev @commitlint/{cli,config-conventional}
+```
+
+```bash [pnpm]
+pnpm add --save-dev @commitlint/{cli,config-conventional}
+```
+
+:::
+
+### 配置
+
+[官方文档](https://commitlint.js.org/reference/configuration.html)
+
+在项目根目录下添加文件`commitlint.config.js`，
+
+要使用commitlint，你需要设置commit-msg钩子，可以使用[Husky](https://typicode.github.io/husky/)的commit-msg钩子。
+
+初始化husky后，可以使用命令行创建commit-msg钩子
+
+```bash
+echo "npx --no -- commitlint --edit \$1" > .husky/commit-msg
+```
+
+也可以在`.husky`目录下手动创建文件`commit-msg`
+
+下面是各个配置项
+
+#### extends
+
+extends的作用是复用配置好的第三方配置，配置的值会从node_modules中引入，因此必须要先安装对应的依赖
+
+```js
+{
+  extends: ['@commitlint/config-conventional'],
+}
+```
+
+#### parserPreset
+
+parserPreset用来解析提交信息，可以是第三方包，也可以是本地文件。如果是第三方包则从node_modules中引入，必须要先安装对应的依赖
+
+```js
+{
+  parserPreset: 'conventional-changelog-atom',
+}
+```
+
+#### formatter
+
+格式化输出提交信息
+
+```js
+{
+  formatter: '@commitlint/format',
+}
+```
+
+#### rules
+
+定义校验规则，定义的规则优先级大于extends扩展的规则
+
+```js
+{
+  rules: {
+    'type-enum': [2, 'always', ['foo']],
+  },
+}
+```
+
+#### ignores
+
+设置忽略的规则，满足条件则直接通过校验
+
+```js
+{
+  ignores: [(commit) => commit === ''],
+}
+```
+
+#### defaultIgnores
+
+是否使用默认的忽略规则
+
+```js
+{
+  defaultIgnores: true,
+}
+```
+
+#### helpUrl
+
+当校验失败的时候提示对应的帮助链接
+
+```js
+{
+  helpUrl: 'https://github.com/conventional-changelog/commitlint/#what-is-commitlint',
+}
+```
+
+#### prompt
+
+自定义提示词配置[prompt config](https://commitlint.js.org/reference/prompt.html)，用于交互式提交，可以配合工具`@commitlint/cz-commitlint`使用
+
+```js
+prompt: {
+  messages: {},
+  questions: {
+    type: {
+      description: 'please input type:',
+    },
+  },
+},
+```
