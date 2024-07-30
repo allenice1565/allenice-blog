@@ -202,6 +202,19 @@ module.exports = {
 
 【在eslint中关闭冲突规则】和【将prettier的规则加入到eslint规则中】两种方案都可以，prettier官网推荐前者，前者速度快些。
 
+最开始我也是觉得【在eslint中关闭冲突规则】的方案更加简单，效率也高，后来发现，eslint中一些插件提供了prettier风格以外的风格，比如vue组件属性顺序格式化，js import导入的顺序格式化，这些是prettier做不了的，如果只是单纯的把代码风格交给prettier，代码质量交给eslint，那么一些特定场景的代码风格就处理不了，所以还是得选择后者【将prettier的规则加入到eslint规则中】。
+
+将prettier的规则加入到eslint规则中后，将默认的格式化设置为eslint，则可以在保存文件的时候进行格式化。
+
+```.vscode/settings.json
+{
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": true,
+    "eslint.format.enable": true
+}
+
+```
+
 ### 疑问：为什么eslint可以执行代码格式化，还需要prettier？
 
 eslint格式化特点就是配置了哪些规则，就只会按照相应的规则格式化，，而prettier对于代码风格这方面做的非常细致，团队内部所有人使用prettier格式化后的结果可以做到风格一致。这一点eslint做不到，比如下面代码：
@@ -436,7 +449,6 @@ pnpm add --save-dev @commitlint/{cli,config-conventional}
 
 [官方文档](https://commitlint.js.org/reference/configuration.html)
 
-在项目根目录下添加文件`commitlint.config.js`，
 
 要使用commitlint，你需要设置commit-msg钩子，可以使用[Husky](https://typicode.github.io/husky/)的commit-msg钩子。
 
@@ -448,91 +460,58 @@ echo "npx --no -- commitlint --edit \$1" > .husky/commit-msg
 
 也可以在`.husky`目录下手动创建文件`commit-msg`
 
-下面是各个配置项
 
-#### extends
 
-extends的作用是复用配置好的第三方配置，配置的值会从node_modules中引入，因此必须要先安装对应的依赖
-
-```js
-{
-  extends: ['@commitlint/config-conventional'],
-}
+安装依赖：
+``` bash
+pnpm add -D conventional-changelog-atom @commitlint/format
 ```
-
-#### parserPreset
-
-parserPreset用来解析提交信息，可以是第三方包，也可以是本地文件。如果是第三方包则从node_modules中引入，必须要先安装对应的依赖
+在项目根目录下添加文件`commitlint.config.mjs`，
 
 ```js
-{
-  parserPreset: 'conventional-changelog-atom',
-}
-```
-
-#### formatter
-
-格式化输出提交信息
-
-```js
-{
-  formatter: '@commitlint/format',
-}
-```
-
-#### rules
-
-定义校验规则，定义的规则优先级大于extends扩展的规则
-
-```js
-{
-  rules: {
-    'type-enum': [2, 'always', ['foo']],
-  },
-}
-```
-
-#### ignores
-
-设置忽略的规则，满足条件则直接通过校验
-
-```js
-{
-  ignores: [(commit) => commit === ''],
-}
-```
-
-#### defaultIgnores
-
-是否使用默认的忽略规则
-
-```js
-{
-  defaultIgnores: true,
-}
-```
-
-#### helpUrl
-
-当校验失败的时候提示对应的帮助链接
-
-```js
-{
-  helpUrl: 'https://github.com/conventional-changelog/commitlint/#what-is-commitlint',
-}
-```
-
-#### prompt
-
-自定义提示词配置[prompt config](https://commitlint.js.org/reference/prompt.html)，用于交互式提交，可以配合工具`@commitlint/cz-commitlint`使用
-
-```js
-prompt: {
-  messages: {},
-  questions: {
-    type: {
-      description: 'please input type:',
+export default {
+    extends: ['@commitlint/config-conventional'],
+    parserPreset: 'conventional-changelog-atom',
+    formatter: '@commitlint/format',
+    rules: {
+        'type-enum': [2, 'always', ['foo']],
     },
-  },
-},
+    ignores: [
+        (commit) => {
+            return commit.trim() === '测试提交'
+        },
+    ],
+    defaultIgnores: true,
+    helpUrl:
+        'https://github.com/conventional-changelog/commitlint/#what-is-commitlint',
+    prompt: {
+        messages: {},
+        questions: {
+            type: {
+                description: 'please input type:',
+            },
+        },
+    },
+}
 ```
+
+### 提交类型枚举
+```js
+[
+  'build',
+  'chore',
+  'ci',
+  'docs',
+  'feat',
+  'fix',
+  'perf',
+  'refactor',
+  'revert',
+  'style',
+  'test',
+];
+```
+
+## commitizen
+
+[commitizen](https://github.com/commitizen/cz-cli)可以用命令行进行选项式的提交

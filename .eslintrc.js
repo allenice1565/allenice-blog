@@ -8,7 +8,6 @@ module.exports = {
         'standard-with-typescript',
         'plugin:vue/vue3-essential',
         'plugin:markdown/recommended',
-        'prettier',
     ],
     overrides: [
         {
@@ -25,9 +24,6 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
-    plugins: ['vue'],
-    rules: {
-        semi: ['error', 'never'],
-        quotes: ['error', 'single'],
-    },
+    plugins: ['vue', 'prettier'],
+    rules: {},
 }

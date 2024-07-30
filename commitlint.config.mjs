@@ -1,6 +1,24 @@
 export default {
+    extends: ['@commitlint/config-conventional'],
+    parserPreset: 'conventional-changelog-atom',
+    formatter: '@commitlint/format',
     rules: {
-        'empty-rules': [0],
+        'type-enum': [2, 'always', ['foo']],
     },
-    ignores: [(commit) => commit === ''],
+    ignores: [
+        (commit) => {
+            return commit.trim() === '测试提交'
+        },
+    ],
+    defaultIgnores: true,
+    helpUrl:
+        'https://github.com/conventional-changelog/commitlint/#what-is-commitlint',
+    prompt: {
+        messages: {},
+        questions: {
+            type: {
+                description: 'please input type:',
+            },
+        },
+    },
 }
