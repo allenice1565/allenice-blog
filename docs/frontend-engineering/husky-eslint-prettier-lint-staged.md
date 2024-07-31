@@ -515,3 +515,28 @@ export default {
 ## commitizen
 
 [commitizen](https://github.com/commitizen/cz-cli)可以用命令行进行选项式的提交
+
+### 安装
+
+```bash
+pnpm install -D commitizen
+```
+
+初始化
+
+```bash
+npx commitizen init cz-conventional-changelog --pnpm --save-dev --save-exact
+```
+注意，如果用的是pnpm包管理器，则使用`--pnpm`参数，不加参数，默认是npm。如果是yarn，则使用`--yarn`
+
+### 交互式提交
+
+将待提交文件添加到暂存区后，执行下面的命令
+```
+npx cz
+```
+如果是全局安装的`commitizen`的话，则直接使用`cz`命令进行提交
+
+### 适配器
+
+如果要更改提问内容以及对提交信息做处理，可以自行编写adapter，参考[流行的adapter](https://github.com/commitizen/cz-cli?tab=readme-ov-file#adapters)修改
