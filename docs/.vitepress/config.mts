@@ -6,15 +6,15 @@ export default defineConfig({
     description: '前端开发记录',
     cleanUrls: true,
     rewrites: {
-        // engineering/eslint-prettier
-        '0000-frontend-engineering/0000-husky-eslint-prettier-lint-staged.md':
-            'engineering/eslint-prettier.md',
-        // /engineering/pnpm-alia
-        '0000-frontend-engineering/0005-pnpm-alia.md':
-            'engineering/pnpm-alia.md',
-        // engineering/path-alias
-        '0000-frontend-engineering/0010-path-alias.md':
-            'engineering/path-alias.md',
+        // engineering/problems/eslint-prettier
+        '0000-frontend-engineering/0000-problems/0000-ts-enum-in-vue.md':
+            'engineering/problems/ts-enum-in-vue.md',
+        // engineering/reference/eslint-prettier
+        '0000-frontend-engineering/0005-reference/0000-husky-eslint-prettier-lint-staged.md':
+            'engineering/reference/eslint-prettier.md',
+        // engineering/reference/path-alias
+        '0000-frontend-engineering/0005-reference/0010-path-alias.md':
+            'engineering/reference/path-alias.md',
     },
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
@@ -22,19 +22,29 @@ export default defineConfig({
             { text: '首页', link: '/' },
             {
                 text: '前端基建',
-                link: '/engineering/eslint-prettier',
+                link: '/engineering/reference/eslint-prettier',
+            },
+            {
+                text: '常见问题',
+                link: '/engineering/problems/ts-enum-in-vue',
             },
         ],
 
         sidebar: {
-            '/engineering/': [
+            '/engineering/problems/': [
+                {
+                    text: 'vue中使用ts的enum枚举',
+                    link: '/engineering/problems/ts-enum-in-vue',
+                },
+            ],
+            '/engineering/reference/': [
                 {
                     text: 'eslint-prettier',
-                    link: '/engineering/eslint-prettier',
+                    link: '/engineering/reference/eslint-prettier',
                 },
                 {
                     text: 'vite、tsconfig、nuxt、pnpm别名设置',
-                    link: '/engineering/path-alias',
+                    link: '/engineering/reference/path-alias',
                 },
             ],
         },
