@@ -9,6 +9,12 @@ export default defineConfig({
         // engineering/problems/eslint-prettier
         '0000-frontend-engineering/0000-problems/0000-ts-enum-in-vue.md':
             'engineering/problems/ts-enum-in-vue.md',
+        // engineering/problems/eslint-prettier
+        '0000-frontend-engineering/0000-problems/0001-wujie-404.md':
+            'engineering/problems/wujie-404.md',
+        // engineering/problems/elmentplus-table-svg-not-visible
+        '0000-frontend-engineering/0000-problems/0005-elmentplus-table-svg-not-visible.md':
+            'engineering/problems/elmentplus-table-svg-not-visible.md',
         // engineering/reference/eslint-prettier
         '0000-frontend-engineering/0005-reference/0000-husky-eslint-prettier-lint-staged.md':
             'engineering/reference/eslint-prettier.md',
@@ -35,6 +41,14 @@ export default defineConfig({
                 {
                     text: 'vue中使用ts的enum枚举',
                     link: '/engineering/problems/ts-enum-in-vue',
+                },
+                {
+                    text: '无界多次刷新后页面异常',
+                    link: '/engineering/problems/wujie-404',
+                },
+                {
+                    text: 'element-plus的table组件中svg未显示',
+                    link: '/engineering/problems/elmentplus-table-svg-not-visible',
                 },
             ],
             '/engineering/reference/': [
